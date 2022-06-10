@@ -39,7 +39,7 @@ contract Voting is Ownable{
     event Voted(address voter, uint proposalId);
 
     modifier onlyVoters() {
-        require(listVoters[msg.sender].isRegistered == true, "You are not allowed to add a proposal");
+        require(listVoters[msg.sender].isRegistered == true, "You are not a voter");
         _;
     }
 
