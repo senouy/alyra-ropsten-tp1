@@ -26,12 +26,12 @@ contract Voting is Ownable{
         VotesTallied
     }
 
-    mapping(address => Voter) public listVoters; // Whitelisted voters who can partitipate to the vote
+    mapping(address => Voter) listVoters; // Whitelisted voters who can partitipate to the vote
     address[] listAddressVoters; //Keep address voters in an array in order to be able to delete the mapping later
-    Proposal[] public listProposals; //List of all propasals sent by voters
-    uint public winningProposalId; // Identifier of winner proposal
-    Proposal public winningProposal; // Object of winning proposal
-    WorkflowStatus public votingStatus; // Current voting status
+    Proposal[] listProposals; //List of all propasals sent by voters - only visible by voters
+    Proposal public winningProposal; // Object of winning proposal - visible by everyone
+    uint public winningProposalId; // Identifier of winner proposal - visible by everyone
+    WorkflowStatus votingStatus; // Current voting status - only visible by admin
 
     event VoterRegistered(address voterAddress); 
     event WorkflowStatusChange(WorkflowStatus previousStatus, WorkflowStatus newStatus);
@@ -119,5 +119,21 @@ contract Voting is Ownable{
         }
 
         return winningProposalIdTemp;
+    }
+
+    /*
+    * Get list of all proposals
+    * Available only for voters 
+    */
+    function getListProposals() public view onlyVoters returns (Proposal[] memory) {
+        return listProposals;
+    }
+
+    /*
+    * Get current voting status
+    * Available only for admin
+    */
+    function getVotingStatus() public view onlyOwner returns (WorkflowStatus){
+        return votingStatus;
     }
 }
