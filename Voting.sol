@@ -128,6 +128,14 @@ contract Voting is Ownable{
     function getListProposals() public view onlyVoters returns (Proposal[] memory) {
         return listProposals;
     }
+	
+	/*
+    * Get a vote by address
+    * Available only for voters 
+    */
+	function getVoteByAddress(address _addr) public view onlyVoters returns (uint ) {
+        return listVoters[_addr].votedProposalId;
+    }
 
     /*
     * Get current voting status
